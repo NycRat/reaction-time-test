@@ -93,6 +93,9 @@ pub fn HomePage(cx: Scope) -> impl IntoView {
                         }
                     }
                 } </h2>
+                <a href="/reaction-time-test/settings">
+                    "Settings"
+                </a>
                 <ResultsList results />
             </div>
             <div class=move || { if running() { "clicky red" } else { "clicky" } }
