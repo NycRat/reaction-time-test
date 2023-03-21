@@ -144,18 +144,11 @@ pub fn HomePage(cx: Scope) -> impl IntoView {
 
 #[component]
 pub fn ResultsList(cx: Scope, results: ReadSignal<Vec<TestResult>>) -> impl IntoView {
-    let (list_visible, set_list_visible) = create_signal(cx, true);
-
     view! {
         cx,
-        <button class="list-button" on:click=move |_| {
-            set_list_visible(!list_visible());
-        }>
-            "Past Results"
-        </button>
-        <div class=move || {if list_visible() {"list"} else { "list hidden"} }>
+        <div class="list">
             <For
-                each=results
+                each=move || results().into_iter().rev()
                 key=move |result| result.id
                 view=move |cx, result: TestResult| {
                     view! {
