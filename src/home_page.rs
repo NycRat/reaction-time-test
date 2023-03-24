@@ -61,7 +61,7 @@ pub fn HomePage(cx: Scope) -> impl IntoView {
         }
     });
 
-    _ = set_interval(
+    let handle = set_interval(
         move || {
             if running() {
                 if !early_click() {
@@ -78,7 +78,11 @@ pub fn HomePage(cx: Scope) -> impl IntoView {
             }
         },
         std::time::Duration::from_millis(10),
-    );
+    ).unwrap();
+
+    on_cleanup(cx, move || {
+        handle.clear();
+    });
 
     view! { cx,
         <div class="app">
